@@ -16,12 +16,10 @@ function fetchActiveUserSessions() : Promise<UserSession[]> {
 
 function getTotalAdminDuration() : Promise<number> {
   return fetchActiveUserSessions()
-    .then((sessions) => {
-      const adminSessions = sessions.filter((session) => session.isAdminUser);
-      const totalAdminDuration = adminSessions.reduce((sum, session) => {
-        return sum + session.durationInMs
-      }, 0)
-      return totalAdminDuration; 
+    .then(sessions => {
+      return sessions
+        .filter(session => session.isAdminUser)
+        .reduce((sum, adminSession) => sum + adminSession.durationInMs, 0) 
     })
 }
 
