@@ -41,7 +41,7 @@ function delay(payload: any, delayInMs: number) : Promise<any> {
   })
 }
 
-function intersection(array1: any[], array2: any[]) : any[] {
+function intersection(array1: string[], array2: string[]) : string[] {
   return array1.filter(element1 => {
     return array2.indexOf(element1) !== -1;
   });
