@@ -42,19 +42,17 @@ function delay(payload: any, delayInMs: number) : Promise<any> {
 }
 
 function intersection(array1: string[], array2: string[]) : string[] {
-  return array1.filter(element1 => {
-    return array2.indexOf(element1) !== -1;
-  });
+  return array1.filter(element1 => array2.indexOf(element1) !== -1);
 }
 
 function countPersistentSessions(timeBetweenInMs: number) : Promise<number> {
   return fetchActiveUserSessions()
-    .then((oldSessions) => delay(oldSessions, timeBetweenInMs))
+    .then(oldSessions => delay(oldSessions, timeBetweenInMs))
     .then((oldSessions) => {
       return fetchActiveUserSessions()
-        .then(newSessions => {
-          const oldIds = oldSessions.map(s => s.id);
-          const newIds = newSessions.map(s => s.id);
+        .then((newSessions) => {
+          const oldIds = oldSessions.map(session => session.id);
+          const newIds = newSessions.map(session => session.id);
           return intersection(oldIds, newIds).length;
         });
     });
