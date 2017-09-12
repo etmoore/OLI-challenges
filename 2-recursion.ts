@@ -1,20 +1,21 @@
-interface File {
+interface FileType {
   getName(): string
 }
 
-interface Directory extends File {
-  getChildren(): File[]
+interface Directory extends FileType {
+  getChildren(): FileType[]
 }
+
 
 // Test if file is a Directory with typeguard: 
 // https://www.typescriptlang.org/docs/handbook/advanced-types.html
-function isDirectory(file: File | Directory) : file is Directory {
+function isDirectory(file: FileType | Directory) : file is Directory {
   return (<Directory>file).getChildren !== undefined;
 }
 
 
 // TODO: Given a root file, return all filenames in the tree in a flat array.
-function getAllFileNamesHelper(files: File[] , namesArray: string[]) : string[] {
+function getAllFileNamesHelper(files: FileType[] , namesArray: string[]) : string[] {
   files.forEach((file) => {
     namesArray.push(file.getName());
     if (isDirectory(file))
@@ -23,7 +24,7 @@ function getAllFileNamesHelper(files: File[] , namesArray: string[]) : string[] 
   return namesArray;
 }
 
-function getAllFileNames(file: File | Directory) : string[] {
+function getAllFileNames(file: FileType | Directory) : string[] {
   let namesArray = [file.getName()];
   if (isDirectory(file))
     return getAllFileNamesHelper(file.getChildren(), namesArray);
