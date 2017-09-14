@@ -35,7 +35,7 @@ function getTotalAdminDuration() : Promise<number> {
 // present in both sets of results) between the two
 // time periods
 
-function delay(payload: any, delayInMs: number) : Promise<any> {
+function waitAndDeliver(delayInMs: number, payload: any) : Promise<any> {
   return new Promise((resolve, reject) => {
     setTimeout(() => resolve(payload), delayInMs);
   })
@@ -47,7 +47,7 @@ function intersection(array1: string[], array2: string[]) : string[] {
 
 function countPersistentSessions(timeBetweenInMs: number) : Promise<number> {
   return fetchActiveUserSessions()
-    .then(oldSessions => delay(oldSessions, timeBetweenInMs))
+    .then(oldSessions => waitAndDeliver(timeBetweenInMs, oldSessions))
     .then((oldSessions) => {
       return fetchActiveUserSessions()
         .then((newSessions) => {
