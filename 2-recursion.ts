@@ -15,18 +15,18 @@ function isDirectory(file: FileType | Directory) : file is Directory {
 
 
 // TODO: Given a root file, return all filenames in the tree in a flat array.
-function getAllFileNamesHelper(files: FileType[] , namesArray: string[]) : string[] {
+function getAllFileNamesHelper(files: FileType[] , names: string[]) : string[] {
   files.forEach((file) => {
-    namesArray.push(file.getName());
+    names.push(file.getName());
     if (isDirectory(file))
-      getAllFileNamesHelper(file.getChildren(), namesArray);
+      getAllFileNamesHelper(file.getChildren(), names);
   });
-  return namesArray;
+  return names;
 }
 
-function getAllFileNames(file: FileType | Directory) : string[] {
-  let namesArray = [file.getName()];
-  if (isDirectory(file))
-    return getAllFileNamesHelper(file.getChildren(), namesArray);
-  return namesArray;
+function getAllFileNames(rootFile: FileType | Directory) : string[] {
+  let names = [ rootFile.getName() ]
+  return isDirectory(rootFile) 
+    ? getAllFileNamesHelper(rootFile.getChildren(), names)
+    : names;
 }
