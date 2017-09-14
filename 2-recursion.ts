@@ -25,7 +25,7 @@ function getAllFileNamesHelper(files: FileType[] , names: string[]) : string[] {
 }
 
 function getAllFileNames(rootFile: FileType) : string[] {
-  let names = [ rootFile.getName() ]
+  let names = [rootFile.getName()];
   return isDirectory(rootFile) 
     ? getAllFileNamesHelper(rootFile.getChildren(), names)
     : names;
